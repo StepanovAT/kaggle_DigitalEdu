@@ -5,6 +5,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score,confusion_matrix 
 df = pd.read_csv('train.csv')
 print(df.tail())
+# delete Non-Influencing Data
 df.drop(['id','has_photo','has_mobile','followers_count','graduation','relation','education_status','langs','life_main','people_main','city','last_seen','occupation_type','occupation_name','career_start','career_end'], axis = 1,inplace = True)
 def data(year):
     if len(str(year))<8 or pd.isnull(year):
@@ -21,7 +22,7 @@ sc = StandardScaler()
 x_train, x_test, y_train, y_test = train_test_split(X , Y, test_size = 0.25)
 x_train = sc.fit_transform(x_train)
 x_test = sc.transform(x_test)
-classifier = KNeighborsClassifier(n_neighbors = 103)
+classifier = KNeighborsClassifier(n_neighbors = 5)
 classifier.fit(x_train, y_train)
 pred = classifier.predict(x_test)
-print(accuracy_score(y_test, pred) * 100)
+print("Accuracy score:", accuracy_score(y_test, pred) * 100)
